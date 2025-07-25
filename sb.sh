@@ -87,7 +87,8 @@ cd
 fi
 if [ -x "$(command -v apt-get)" ]; then
 apt update -y
-apt install jq cron socat iptables-persistent coreutils util-linux -y
+sudo DEBIAN_FRONTEND=noninteractive \
+  apt install jq cron socat iptables-persistent coreutils util-linux -y
 elif [ -x "$(command -v yum)" ]; then
 yum update -y && yum install epel-release -y
 yum install jq socat coreutils util-linux -y
@@ -197,10 +198,7 @@ iptables -P OUTPUT ACCEPT >/dev/null 2>&1
 iptables -t mangle -F >/dev/null 2>&1
 iptables -F >/dev/null 2>&1
 iptables -X >/dev/null 2>&1
-if [[ "$release" =~ ^(Debian|Ubuntu)$ ]]; then
-sudo DEBIAN_FRONTEND=noninteractive \
 netfilter-persistent save >/dev/null 2>&1
-fi
 
 if [[ -n $(apachectl -v 2>/dev/null) ]]; then
 systemctl stop httpd.service >/dev/null 2>&1
