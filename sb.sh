@@ -75,6 +75,10 @@ apk add wget curl tar jq tzdata openssl expect git socat iproute2 iptables grep 
 apk add virt-what
 apk add qrencode
 else
+#关闭Debian系保存规则时会调用一个 dialog/whiptail 菜单
+if [[ "$release" =~ ^(Debian|Ubuntu)$ ]]; then
+sudo DEBIAN_FRONTEND=noninteractive 
+fi
 if [[ $release = Centos && ${vsid} =~ 8 ]]; then
 cd /etc/yum.repos.d/ && mkdir backup && mv *repo backup/ 
 curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-8.repo
