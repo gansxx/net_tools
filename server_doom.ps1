@@ -1,0 +1,1 @@
+python $PSScriptRoot/vps_manage.py -d

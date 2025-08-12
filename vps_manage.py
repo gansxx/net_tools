@@ -4,16 +4,33 @@ import json
 from loguru import logger
 import argparse
 import time
+import pandas as pd
+from pathlib import Path
 
 headers = {
     'Authorization': 'Bearer ' + os.getenv('VULTR_API_KEY', ''),
     'Content-Type': 'application/json',
 }
-def create_new_instance(region='ewr', plan='vc2-1c-0.5gb', label='test_instance', os_id=2136):
+# 获取当前脚本的绝对路径
+script_path = Path(__file__).resolve()
+
+# 获取当前脚本所在的目录
+script_dir = script_path.parent
+# 构建目标文件的路径（假设 server_detail.json 在脚本所在目录下）
+file_path = f"{script_dir}\server_detail.json"
+logger.info(f"读取配置文件: {file_path}")
+df=pd.read_json(file_path)
+region=df['region'][0]
+plan=df['plan'][0]
+label=df['label'][0]
+os_id=df['os_id'][0]
+
+#ToDo:添加从本地json文件中读取参数的代码，并增加选择区域的功能
+def create_new_instance(region=region, plan=plan, label=label, os_id=os_id):
     """
     创建新的Vultr实例
     """
-    #region对应地址，lax代表洛杉矶,ewr代表纽约
+    #region对应地址，lax代表洛杉矶,ewr代表纽约,sgp代表新加坡
     #region可以通过https://api.vultr.com/v2/regions获取
     #plan对应地址，vc2-1c-1gb代表1核1G内存
     #label代表实例名称
