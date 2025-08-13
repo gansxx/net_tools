@@ -19,11 +19,11 @@ script_dir = script_path.parent
 # 构建目标文件的路径（假设 server_detail.json 在脚本所在目录下）
 file_path = f"{script_dir}\server_detail.json"
 logger.info(f"读取配置文件: {file_path}")
-df=pd.read_json(file_path)
-region=df['region'][0]
-plan=df['plan'][0]
-label=df['label'][0]
-os_id=df['os_id'][0]
+df=pd.read_json(file_path).to_dict(orient='records')
+region=df[0]['region']
+plan=df[0]['plan']
+label=df[0]['label']
+os_id=df[0]['os_id']
 
 #ToDo:添加从本地json文件中读取参数的代码，并增加选择区域的功能
 def create_new_instance(region=region, plan=plan, label=label, os_id=os_id):
