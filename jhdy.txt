@@ -1,0 +1,4 @@
+vless://8620a31a-a56f-4611-8b9c-7023037ced58@207.246.106.118:23042?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.yahoo.com&fp=chrome&pbk=Nd5fbgEMYslNpjcBukOS2HQdFLsjQGJ61oteUdN9CxM&sid=628030d4&type=tcp&headerType=none#vl-reality-vultr
+vmess://eyJhZGQiOiIyMDcuMjQ2LjEwNi4xMTgiLCJhaWQiOiIwIiwiaG9zdCI6Ind3dy5iaW5nLmNvbSIsImlkIjoiODYyMGEzMWEtYTU2Zi00NjExLThiOWMtNzAyMzAzN2NlZDU4IiwibmV0Ijoid3MiLCJwYXRoIjoiODYyMGEzMWEtYTU2Zi00NjExLThiOWMtNzAyMzAzN2NlZDU4LXZtIiwicG9ydCI6IjgwODAiLCJwcyI6InZtLXdzLXZ1bHRyIiwidGxzIjoiIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9Cg==
+hysteria2://8620a31a-a56f-4611-8b9c-7023037ced58@207.246.106.118:48449?security=tls&alpn=h3&insecure=1&sni=www.bing.com#hy2-vultr
+tuic://8620a31a-a56f-4611-8b9c-7023037ced58:8620a31a-a56f-4611-8b9c-7023037ced58@207.246.106.118:12659?congestion_control=bbr&udp_relay_mode=native&alpn=h3&sni=www.bing.com&allow_insecure=1#tu5-vultr
