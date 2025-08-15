@@ -2,8 +2,8 @@
 
 ## 项目简介
 
-本项目用于远程管理 VPS 的启动与销毁，并在 VPS 上自动部署代理服务（如 sing-box/hysteria2），同时自动更新订阅文件到 GitLab/Jihulab 仓库，方便客户端订阅。
-
+本项目用于远程管理vultur的 VPS 的启动与销毁，并在 VPS 上自动部署代理服务（如 sing-box/hysteria2），同时自动更新订阅文件到 GitLab/Jihulab 仓库，方便客户端订阅。
+在使用本项目前，你需要确保已注册[https://www.vultr.com/?ref=9778763|vultur]账户,并且已获得vultur的api_key
 
 
 
@@ -25,8 +25,16 @@
 pip install pandas loguru
 ```
 
----
 
+---
+## 脚本使用方式
+```shell
+git clone https://github.com/gansxx/net_tools.git
+```
+- 2. 配置环境变量
+- 在windows中将该库的地址加入到环境变量中
+
+- 3.
 ---
 
 ## 主要功能
@@ -51,16 +59,23 @@ pip install pandas loguru
 ---
 
 ## 快速开始
+### 1.克隆仓库
+```shell
+git clone https://github.com/gansxx/net_tools.git
+```
+### 2. 配置环境变量
+- 在windows中将该库的地址加入到环境变量中
 
-### 1. 配置 VPS 参数
+### 3. 配置 VPS 参数
 编辑 `server_detail.json`，设置你需要的区域、套餐、标签、系统等参数。
 
-### 2. 启动 VPS 并部署代理
+### 4. 启动 VPS 并部署代理
 在 Windows PowerShell 中执行：
 ```powershell
 proxy_go.ps1
 ```
 脚本会自动连接远程 VPS，部署代理服务，并下载订阅文件到本地。
+- 第一次启动时，会要求你配置用于保存远程订阅仓库的地址,可以使用github或gitlab的地址，如果仓库地址是私有的，可以参照第四步解决
 
 ### 3. 销毁 VPS
 在 Windows PowerShell 中执行：
@@ -68,7 +83,7 @@ proxy_go.ps1
 server_doom.ps1
 ```
 
-### 4. GitLab/Jihulab 订阅配置
+### 4. GitLab/Jihulab 订阅配置（可选）
 参考 `jihulab.md`，配置远程仓库地址和订阅地址，将订阅文件推送到你的 GitLab/Jihulab 项目。
 
 ---
@@ -77,12 +92,13 @@ server_doom.ps1
 ```
 https://gitlab.com/api/v4/projects/用户名%2F项目名/repository/files/jhdy.txt/raw?ref=main&private_token=项目token
 ```
+- 该订阅地址支持在v2rayN中导入，不支持clash
 
 ---
 
 ## 注意事项
 - 需提前配置好 Vultr API Key 环境变量
-- 需在 Jihulab/GitLab 上创建项目并获取 Access Token
+- 如果需要在jihulab上创建私人项目，需在 Jihulab/GitLab 上创建项目并获取 Access Token
 - PowerShell 脚本仅适用于 Windows 环境
 
 ---
@@ -96,6 +112,7 @@ https://gitlab.com/api/v4/projects/用户名%2F项目名/repository/files/jhdy.t
 ## 参考
 - [Jihulab订阅配置教程](jihulab.md)
 - [Vultr API文档](https://www.vultr.com/api/)
+- [V2rayN](https://github.com/2dust/v2rayN)
 
 ---
 
