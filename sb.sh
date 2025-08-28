@@ -4627,6 +4627,7 @@ precore=$(curl -Ls https://data.jsdelivr.com/v1/package/gh/SagerNet/sing-box | g
 inscore=$(/etc/s-box/sing-box version 2>/dev/null | awk '/version/{print $NF}')
 }
 
+# 脚本中切换sb.json的逻辑是只要主版本前缀是 1.10，就用 sb10.json；否则一律用 sb11.json来代替
 upsbcroe(){
 sbactive
 lapre
@@ -5072,6 +5073,37 @@ blue "sing-box-yg脚本项目地址：https://github.com/yonggekkk/x-ui-yg"
 echo
 }
 
+update_core_self(){
+  sbactive
+upcore=1.12.4
+if [[ -n $upcore ]]; then
+green "开始下载并更新Sing-box内核……请稍等"
+sbname="sing-box-$upcore-linux-$cpu"
+curl -L -o /etc/s-box/sing-box.tar.gz  -# --retry 2 https://github.com/SagerNet/sing-box/releases/download/v$upcore/$sbname.tar.gz
+if [[ -f '/etc/s-box/sing-box.tar.gz' ]]; then
+tar xzf /etc/s-box/sing-box.tar.gz -C /etc/s-box
+mv /etc/s-box/$sbname/sing-box /etc/s-box
+rm -rf /etc/s-box/{sing-box.tar.gz,$sbname}
+if [[ -f '/etc/s-box/sing-box' ]]; then
+chown root:root /etc/s-box/sing-box
+chmod +x /etc/s-box/sing-box
+sbnh=$(/etc/s-box/sing-box version 2>/dev/null | awk '/version/{print $NF}' | cut -d '.' -f 1,2)
+[[ "$sbnh" == "1.10" ]] && num=10 || num=11
+rm -rf /etc/s-box/sb.json
+cp /etc/s-box/sb${num}.json /etc/s-box/sb.json
+restartsb
+blue "成功升级/切换 Sing-box 内核版本：$(/etc/s-box/sing-box version | awk '/version/{print $NF}')" && sleep 3 && sb
+else
+red "下载 Sing-box 内核不完整，安装失败，请重试" && upsbcroe
+fi
+else
+red "下载 Sing-box 内核失败或不存在，请重试" && upsbcroe
+fi
+else
+red "版本号检测出错，请重试" && upsbcroe
+fi
+}
+
 clear
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
 echo -e "${bblue} ░██     ░██      ░██ ██ ██         ░█${plain}█   ░██     ░██   ░██     ░█${red}█   ░██${plain}  "
@@ -5234,4 +5266,7 @@ case "$Input" in
 15 ) wgcfgo && sbshare;;
 16 ) sbsm;;
  * ) exit 
+ #esac为case 语句的结束标记
 esac
+#使用自定义脚本更新内核为1.12.4
+update_core_self()
